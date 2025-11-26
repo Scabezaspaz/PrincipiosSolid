@@ -2,12 +2,16 @@ package com.vehiculos.modelo;
 
 import com.vehiculos.interfaces.Conducible;
 import com.vehiculos.interfaces.Vehiculo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * SRP: Esta clase solo se encarga de representar una Bicicleta
  * ISP: Solo implementa las interfaces que necesita (no implementa Motorizado)
  */
 public class Bicicleta implements Vehiculo, Conducible {
+    private static final Logger logger = Logger.getLogger(Bicicleta.class.getName());
+
     private String marca;
     private String tipo;
     private int numeroMarchas;
@@ -30,33 +34,33 @@ public class Bicicleta implements Vehiculo, Conducible {
 
     @Override
     public void mostrarInformacion() {
-        System.out.println("=== BICICLETA ===");
-        System.out.println("Marca: " + marca);
-        System.out.println("Tipo: " + tipo);
-        System.out.println("Marchas: " + numeroMarchas);
-        System.out.println("Ruedas: " + getNumeroRuedas());
+        logger.info("=== BICICLETA ===");
+        logger.log(Level.INFO, "Marca: {0}", marca);
+        logger.log(Level.INFO, "Tipo: {0}", tipo);
+        logger.log(Level.INFO, "Marchas: {0}", numeroMarchas);
+        logger.log(Level.INFO, "Ruedas: {0}", getNumeroRuedas());
     }
 
     @Override
     public void acelerar() {
-        System.out.println("🚴 Pedaleando más rápido...");
+        logger.info("🚴 Pedaleando más rápido...");
     }
 
     @Override
     public void frenar() {
-        System.out.println("🛑 La bicicleta está frenando...");
+        logger.info("🛑 La bicicleta está frenando...");
     }
 
     @Override
     public void girar(String direccion) {
-        System.out.println("↩️ La bicicleta gira a la " + direccion);
+        logger.log(Level.INFO, "↩️ La bicicleta gira a la {0}", direccion);
     }
 
     public void cambiarMarcha(int marcha) {
         if (marcha >= 1 && marcha <= numeroMarchas) {
-            System.out.println("⚙️ Cambiando a la marcha " + marcha);
+            logger.log(Level.INFO, "⚙️ Cambiando a la marcha {0}", marcha);
         } else {
-            System.out.println("⚠️ Marcha no válida");
+            logger.warning("⚠️ Marcha no válida");
         }
     }
 }

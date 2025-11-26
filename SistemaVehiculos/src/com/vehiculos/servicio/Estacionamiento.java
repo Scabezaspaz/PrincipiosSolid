@@ -3,12 +3,16 @@ package com.vehiculos.servicio;
 import com.vehiculos.interfaces.Vehiculo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * DIP: Depende de la interfaz Vehiculo, no de clases concretas
  * SRP: Solo se encarga de gestionar el estacionamiento
  */
 public class Estacionamiento {
+    private static final Logger logger = Logger.getLogger(Estacionamiento.class.getName());
+
     private String nombre;
     private int capacidadMaxima;
     private List<Vehiculo> vehiculosEstacionados;
@@ -25,10 +29,10 @@ public class Estacionamiento {
     public boolean estacionarVehiculo(Vehiculo vehiculo) {
         if (vehiculosEstacionados.size() < capacidadMaxima) {
             vehiculosEstacionados.add(vehiculo);
-            System.out.println("✅ " + vehiculo.getTipo() + " estacionado correctamente");
+            logger.log(Level.INFO, "✅ {0} estacionado correctamente", vehiculo.getTipo());
             return true;
         } else {
-            System.out.println("❌ Estacionamiento lleno. No se puede estacionar el " + vehiculo.getTipo());
+            logger.log(Level.WARNING, "❌ Estacionamiento lleno. No se puede estacionar el {0}", vehiculo.getTipo());
             return false;
         }
     }
@@ -38,10 +42,10 @@ public class Estacionamiento {
      */
     public boolean retirarVehiculo(Vehiculo vehiculo) {
         if (vehiculosEstacionados.remove(vehiculo)) {
-            System.out.println("✅ " + vehiculo.getTipo() + " retirado del estacionamiento");
+            logger.log(Level.INFO, "✅ {0} retirado del estacionamiento", vehiculo.getTipo());
             return true;
         } else {
-            System.out.println("❌ El vehículo no está en el estacionamiento");
+            logger.warning("❌ El vehículo no está en el estacionamiento");
             return false;
         }
     }
@@ -50,22 +54,22 @@ public class Estacionamiento {
      * Muestra información del estacionamiento
      */
     public void mostrarEstado() {
-        System.out.println("\n=================================");
-        System.out.println("🅿️ ESTACIONAMIENTO: " + nombre);
-        System.out.println("=================================");
-        System.out.println("Capacidad: " + vehiculosEstacionados.size() + "/" + capacidadMaxima);
-        System.out.println("\nVehículos estacionados:");
+        logger.info("\n=================================");
+        logger.log(Level.INFO, "🅿️ ESTACIONAMIENTO: {0}", nombre);
+        logger.info("=================================");
+        logger.log(Level.INFO, "Capacidad: {0}/{1}", new Object[]{vehiculosEstacionados.size(), capacidadMaxima});
+        logger.info("\nVehículos estacionados:");
 
         if (vehiculosEstacionados.isEmpty()) {
-            System.out.println("  - Ninguno");
+            logger.info("  - Ninguno");
         } else {
             for (int i = 0; i < vehiculosEstacionados.size(); i++) {
                 Vehiculo v = vehiculosEstacionados.get(i);
-                System.out.println("  " + (i + 1) + ". " + v.getTipo() +
-                        " (" + v.getNumeroRuedas() + " ruedas)");
+                logger.log(Level.INFO, "  {0}. {1} ({2} ruedas)",
+                        new Object[]{i + 1, v.getTipo(), v.getNumeroRuedas()});
             }
         }
-        System.out.println("=================================\n");
+        logger.info("=================================\n");
     }
 
     public int getEspaciosDisponibles() {

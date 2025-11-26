@@ -4,10 +4,17 @@ import com.vehiculos.modelo.Bicicleta;
 import com.vehiculos.modelo.Coche;
 import com.vehiculos.modelo.Motocicleta;
 import com.vehiculos.servicio.Estacionamiento;
+import java.util.logging.Logger;
 
-class Main {
+public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
+    private Main() {
+        // Constructor privado para evitar instanciación
+    }
+
     public static void main(String[] args) {
-        System.out.println("🚗🏍️🚴 SISTEMA DE CONTROL DE VEHÍCULOS 🚴🏍️🚗\n");
+        logger.info("🚗🏍️🚴 SISTEMA DE CONTROL DE VEHÍCULOS 🚴🏍️🚗\n");
 
         // Crear vehículos
         Coche coche = new Coche("Toyota", "Corolla", 4);
@@ -16,42 +23,42 @@ class Main {
 
         // Mostrar información de cada vehículo
         coche.mostrarInformacion();
-        System.out.println();
+        logger.info("");
         moto.mostrarInformacion();
-        System.out.println();
+        logger.info("");
         bici.mostrarInformacion();
-        System.out.println("\n");
+        logger.info("\n");
 
         // Demostración de funcionalidades del Coche
-        System.out.println("--- PROBANDO COCHE ---");
+        logger.info("--- PROBANDO COCHE ---");
         coche.encenderMotor();
         coche.acelerar();
         coche.girar("derecha");
         coche.frenar();
         coche.apagarMotor();
-        System.out.println();
+        logger.info("");
 
         // Demostración de funcionalidades de la Motocicleta
-        System.out.println("--- PROBANDO MOTOCICLETA ---");
+        logger.info("--- PROBANDO MOTOCICLETA ---");
         moto.encenderMotor();
         moto.acelerar();
         moto.girar("izquierda");
         moto.frenar();
-        System.out.println();
+        logger.info("");
 
         // Demostración de funcionalidades de la Bicicleta
-        System.out.println("--- PROBANDO BICICLETA ---");
+        logger.info("--- PROBANDO BICICLETA ---");
         bici.acelerar();
         bici.cambiarMarcha(5);
         bici.girar("derecha");
         bici.frenar();
-        System.out.println();
+        logger.info("");
 
         // Crear estacionamiento
         Estacionamiento estacionamiento = new Estacionamiento("Parking Central", 5);
 
         // Estacionar vehículos
-        System.out.println("--- GESTIONANDO ESTACIONAMIENTO ---");
+        logger.info("--- GESTIONANDO ESTACIONAMIENTO ---");
         estacionamiento.estacionarVehiculo(coche);
         estacionamiento.estacionarVehiculo(moto);
         estacionamiento.estacionarVehiculo(bici);
@@ -63,7 +70,7 @@ class Main {
         estacionamiento.mostrarEstado();
 
         // Crear más vehículos para probar la capacidad
-        System.out.println("--- PROBANDO CAPACIDAD ---");
+        logger.info("--- PROBANDO CAPACIDAD ---");
         Coche coche2 = new Coche("Honda", "Civic", 4);
         Coche coche3 = new Coche("Ford", "Focus", 4);
         Bicicleta bici2 = new Bicicleta("Giant", "Ruta", 18);

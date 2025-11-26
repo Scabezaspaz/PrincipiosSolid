@@ -3,12 +3,16 @@ package com.vehiculos.modelo;
 import com.vehiculos.interfaces.Conducible;
 import com.vehiculos.interfaces.Motorizado;
 import com.vehiculos.interfaces.Vehiculo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * SRP: Esta clase solo se encarga de representar un Coche
  * LSP: Puede sustituir a Vehiculo sin problemas
  */
 public class Coche implements Vehiculo, Conducible, Motorizado {
+    private static final Logger logger = Logger.getLogger(Coche.class.getName());
+
     private String marca;
     private String modelo;
     private int numeroPuertas;
@@ -33,42 +37,42 @@ public class Coche implements Vehiculo, Conducible, Motorizado {
 
     @Override
     public void mostrarInformacion() {
-        System.out.println("=== COCHE ===");
-        System.out.println("Marca: " + marca);
-        System.out.println("Modelo: " + modelo);
-        System.out.println("Puertas: " + numeroPuertas);
-        System.out.println("Ruedas: " + getNumeroRuedas());
+        logger.info("=== COCHE ===");
+        logger.log(Level.INFO, "Marca: {0}", marca);
+        logger.log(Level.INFO, "Modelo: {0}", modelo);
+        logger.log(Level.INFO, "Puertas: {0}", numeroPuertas);
+        logger.log(Level.INFO, "Ruedas: {0}", getNumeroRuedas());
     }
 
     @Override
     public void acelerar() {
         if (motorEncendido) {
-            System.out.println("🚗 El coche está acelerando...");
+            logger.info("🚗 El coche está acelerando...");
         } else {
-            System.out.println("⚠️ Debes encender el motor primero");
+            logger.warning("⚠️ Debes encender el motor primero");
         }
     }
 
     @Override
     public void frenar() {
-        System.out.println("🛑 El coche está frenando...");
+        logger.info("🛑 El coche está frenando...");
     }
 
     @Override
     public void girar(String direccion) {
-        System.out.println("↩️ El coche gira a la " + direccion);
+        logger.log(Level.INFO, "↩️ El coche gira a la {0}", direccion);
     }
 
     @Override
     public void encenderMotor() {
         motorEncendido = true;
-        System.out.println("🔥 Motor del coche encendido");
+        logger.info("🔥 Motor del coche encendido");
     }
 
     @Override
     public void apagarMotor() {
         motorEncendido = false;
-        System.out.println("🔌 Motor del coche apagado");
+        logger.info("🔌 Motor del coche apagado");
     }
 
     @Override
